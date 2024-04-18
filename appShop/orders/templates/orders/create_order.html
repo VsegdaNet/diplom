@@ -1,0 +1,320 @@
+{% load static %}
+{% load carts_tags %}						
+							
+{%user_carts request as carts%}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Products</title>
+
+    
+
+
+    <!--== Google Fonts ==-->
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,500i,600,700,800,900" rel="stylesheet"> {% endcomment %}
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,500,600,700" rel="stylesheet"> {% endcomment %}
+
+    <!--== Bootstrap CSS ==-->
+    <link href="{% static 'assetsС/css/Сbootstrap.min.css' %}" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="{% static 'assetsС/css/style.css' %}" rel="stylesheet" />
+
+</head>
+
+<body>
+
+<!--wrapper start-->
+<div class="wrapper product-information-wrapper">
+  
+  <main class="main-content">
+    <!--== Start Product Area Wrapper ==-->
+    <section class="product-area product-information-area">
+      <div class="container">
+        <div class="product-information">
+          <div class="row">
+            <div class="col-lg-7">
+             
+
+              <div class="edit-checkout-information">
+                <h4 class="title">Контактная информация</h4>
+                <div class="logged-in-information">
+                  <div class="thumb" data-bg-img="assets/img/photos/gravatar2.png"></div>
+                  <p>
+                    <span class="name">{{carts.user.first_name}}</span>
+                    <span>({{carts.user.email}})</span>
+                    <a href="login.html">Log out</a>
+                  </p>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">Держите меня в курсе новостей и эксклюзивных предложений</label>
+                </div>
+                
+                <form action='{% url "orders:create_order" %}' method='post'>
+                  {% csrf_token %}
+                <div class="edit-checkout-form">
+                  <h4 class="title">Адрес доставки</h4>
+                  <div class="row row-gutter-12">
+
+                    <div class="col-lg-6">
+                      <div class="form-floating">
+                        <label for="id_first_name">Имя*</label>
+                        <input type="text" class="form-control" id="id_first_name" 
+                        placeholder="name", value="{% if form.first_name.value %}
+                        <p>{{form.first_name.value}}</p>
+                        {% endif %}"
+                        name='first_name' required>
+                        {% if form.first_name.errors %}
+											  <p>{{form.first_name.errors}}</p>
+											  {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <div class="form-floating">
+                        <label for="id_last_name">Фамилия*</label>
+                        <input type="text" class="form-control" 
+                        id="id_last_name" placeholder="name" name='last_name' 
+                        value="{% if form.last_name.value %}
+                        <p>{{form.last_name.value}}</p>
+                        {% endif %}" required>
+                        {% if form.last_name.errors %}
+											    <p>{{form.last_name.errors}}</p>
+											  {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-floating">
+                        <label for="id_phone_number" class="form-label" >Номер телефона*</label>
+                        <input type="text" class="form-control" id="id_phone_number" 
+                        placeholder="В формате XXX-XXX-XX-XX" name='phone_number' 
+                        value="{% if form.phone_number.value %}
+                        <p>{{form.phone_number.value}}</p>
+                        {% endif %}" required>
+                    
+                      </div>  
+                      {% if form.phone_number.errors %}
+											    <p>{{form.phone_number.errors}}</p>
+											  {% endif %}
+                    </div>
+
+
+                    <div class="col-lg-12">
+                      <label for='delivery' class='form-label'>Способ доставки:</label>
+                    </div>
+  
+                      <div class="col-lg-6">
+                        <div class="form-check form-checkbox">
+                          <label class="form-check-label" for="id_requires_delivery">Нужна доставка</label>
+                          <input class="form-check-input" type="checkbox" 
+                          name='requires_delivery' id="id_requires_delivery" value="1" checked>
+                        </div>
+                        <div class="form-check form-checkbox">
+                          <input class="form-check-input" type="checkbox" name='requires_delivery' id="id_requires_delivery" value="0" >
+                          <label class="form-check-label" for="id_requires_delivery">Самовывоз</label>
+                        </div>
+                      </div>
+                    
+
+                    <div class="col-lg-12">
+                      <div class="form-floating">
+                        <textarea type="text"  id="id_delivery_adress" 
+                        name="delivery_adress" value="{% if form.delivery_adress.value %}
+                        <p>{{form.delivery_adress.value}}</p>
+                        {% endif %}" rows="2"></textarea> 
+                        <label for="id_delivery_adress">Адрес*</label>
+                      </div>
+                      {% if form.delivery_adress.errors %}
+                      <p>{{form.delivery_adress.errors}}</p>
+                    {% endif %}
+                    </div>
+
+                    {% comment %} <div class="col-lg-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput4Grid" placeholder="address" value="">
+                        <label for="floatingInput4Grid">Улица</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput5Grid" placeholder="address" value="">
+                        <label for="floatingInput5Grid">Квартира, дом</label>
+                      </div>
+                    </div> {% endcomment %}
+
+                    {% comment %} <div class="col-lg-6">
+                      <div class="form-floating">
+                        <select class="form-select form-control" id="floatingInput6rid" aria-label="Floating label select example">
+                          <option selected>Bangladesh</option>
+                          <option value="1">Afghanistan</option>
+                          <option value="2">Åland Islands</option>
+                          <option value="3">Albania</option>
+                        </select>
+                        <div class="field-caret"></div>
+                        <label for="floatingInput6rid">Country/Region</label>
+                      </div>
+                    </div> {% endcomment %}
+
+                    {% comment %} <div class="col-lg-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput7Grid" placeholder="address" value="">
+                        <label for="floatingInput7Grid">Почтовый код</label>
+                      </div>
+                    </div> {% endcomment %}
+
+                    <div class="col-lg-12">
+                      <label for='delivery' class='form-label'>Способ оплаты: </label>
+                    </div>
+  
+                      <div class="col-md-12 md-3">
+
+                        <div class="form-check form-checkbox">
+                          <label class="form-check-label"  for="id_payment_on_get">Оплата картой</label>
+                          <input class="form-check-input" type="checkbox" 
+                          name='payment_on_get' id="id_payment_on_get" value="0" checked>
+                        </div>
+
+                        <div class="form-check form-checkbox">
+                          <input class="form-check-input" type="checkbox" name='payment_on_get'
+                           id="id_payment_on_get" value="1" >
+                          <label class="form-check-label" for="id_payment_on_get">При получении</label>
+                        </div>
+                        {% if form.payment_on_get.errors %}
+											    <p>{{form.payment_on_get.errors}}</p>
+											  {% endif %}
+
+                      </div>
+
+
+                    
+
+
+                    <div class="col-12">
+                      <div class="btn-box">
+                        {% comment %} <button class="btn-shipping" href="{% url "orders:create_order" %}">Продолжит</button> {% endcomment %}
+                        <button class="btn btn-outline" type="submit">Продолжит</button>
+                        <a class="btn-return" href="{% url 'catalog:index'  'all' %}">Вернуться в корзину</a>
+                      </div>
+                    </div>
+                  </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="col-lg-5">
+              <div class="shipping-cart-subtotal-wrapper">
+                <div class="shipping-cart-subtotal">
+
+                  {% for cart in carts %}
+                  <div class="shipping-cart-item">
+                    <div class="thumb">
+                      <img src="{{cart.product.images.url}}" alt="Товар" >
+                      <span class="quantity">{{cart.quantity}}</span>
+                    </div>
+                    <div class="content">
+                      <h4 class="title">Meta Slevless Dress</h4>
+                      <span class="info">s / purple / metal</span>
+                      <span class="price">{{cart.products_price}}</span>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
+                  <div class="shipping-subtotal">
+                    <p><span>Промежуточный итог</span><span><strong>{{carts.total_price}}</strong></span></p>
+                    <p><span>Доставка</span><span>Рассчитывается на следующем этапе</span></p>
+                  </div>
+
+                  <div class="shipping-total">
+                    <p class="total">Итого</p>
+                    <p class="price"><span class="usd">Rub</span>{{carts.total_price}}</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+    <div class="edit-checkout-footer">
+      <p>Все права защищены. Rossalia.</p>
+    </div>
+  </main>
+
+  <!--== Scroll Top Button ==-->
+  <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-double-up"></span></div>
+
+  <!--== Start Quick View Menu ==-->
+  <aside class="product-quick-view-modal">
+    <div class="product-quick-view-inner">
+      <div class="product-quick-view-content">
+        <button type="button" class="btn-close">
+          <span class="close-icon"><i class="fa fa-close"></i></span>
+        </button>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="thumb">
+              <img src="assets/img/shop/quick-view1.jpg" alt="Alan-Shop">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="content">
+              <h4 class="title">Meta Slevless Dress</h4>
+              <div class="prices">
+                <del class="price-old">$85.00</del>
+                <span class="price">$70.00</span>
+              </div>
+              <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,</p>
+              <div class="quick-view-select">
+                <div class="quick-view-select-item">
+                  <label for="forSizes" class="form-label">Size:</label>
+                  <select class="form-select" id="forSizes" required>
+                    <option selected value="">s</option>
+                    <option>m</option>
+                    <option>l</option>
+                    <option>xl</option>
+                  </select>
+                </div>
+                <div class="quick-view-select-item">
+                  <label for="forColors" class="form-label">Color:</label>
+                  <select class="form-select" id="forColors" required>
+                    <option selected value="">red</option>
+                    <option>green</option>
+                    <option>blue</option>
+                    <option>yellow</option>
+                    <option>white</option>
+                  </select>
+                </div>
+              </div>
+              <div class="action-top">
+                <div class="pro-qty">
+                  <input type="text" id="quantity4" title="Quantity" value="1" />
+                </div>
+                <button class="btn btn-black">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="canvas-overlay"></div>
+  </aside>
+  <!--== End Quick View Menu ==-->
+
+</div>
+</body>
+
+</html>

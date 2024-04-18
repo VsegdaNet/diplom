@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+		 	 <div class="heading-container">
+				<div class="container heading-standar">
+					<div class="page-breadcrumb">
+						<ul class="breadcrumb">
+							{% comment %} <li>
+								<span>
+									<a class="home" href="#">
+										<span>Home</span>
+									</a>
+								</span>
+							</li>
+							<li>
+								<span>My Account</span>
+							</li> {% endcomment %}
+						</ul>
+					</div>
+				</div>
+			</div>  
+			<div class="content-container no-padding">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="main-content">
+								<div class="commerce commerce-account">
+									<h2 class="commerce-account-heading">Вход</h2>
+
+
+
+									<form class="login" action="{% url "user:login" %}" method="post">
+										{% csrf_token %}
+									
+										
+
+									<div class="form-row form-row-wide">
+											<label for="id_username">
+												Введите ваше имя <span class="required">*</span>
+											</label>
+											<input type="text" class="input-text" name="username" value="{% if form.username.value %}{{form.username.value}}{% endif %}" id="id_username" placeholder="Введите ваше имя пользователя" value=""/>
+										</div>
+										<div class="form-row form-row-wide">
+											<label for="id_password">Введите ваш пароль <span class="required">*</span></label>
+											<input class="input-text" type="password" name="password" id="id_password" placeholder="Введите ваш пароль пользователя"/>
+										</div>
+										<div class="form-row">
+											 <label for="rememberme1" class="inline form-flat-checkbox">
+												<input name="rememberme" type="checkbox" id="rememberme1" value="forever"/><i></i>Remember me 
+											</label> 
+											<br><br>
+											<button class="btn btn-outline" type="submit">Войти</button>
+										</div>
+
+								
+
+										<div class="lost_password">
+											<a href="#">Забыл пароль?</a>
+										</div>
+										<div class="lost_password">
+											<a href="{% url "user:registration" %}">Регистрация</a>
+										</div> 
+									</form>
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endblock  %}

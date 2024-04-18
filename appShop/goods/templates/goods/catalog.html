@@ -1,0 +1,166 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block content %}
+<div class="heading-container">
+				<div class="container heading-standar">
+					<div class="page-breadcrumb">
+						<ul class="breadcrumb">
+							{% comment %} <li>
+								<span>
+									<a class="home" href="{% url "main:index" %}">
+										<span>Главная</span>
+									</a>
+								</span>
+							</li>
+							<li>
+								<span>Каталог</span>
+							</li> {% endcomment %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content-container">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="main-content">
+								<div class="commerce columns-3">
+									<ul class="products columns-3" data-columns="3">
+
+										{%if request.GET.q%}
+										<h3 class="mt-4">Результат поиска по запросу {{request.GET.q}}</h3>
+										{% comment %} {%if not goods%}
+										<h2 class='mt-4'>По запосу ничего не найдено</h2>
+										{% endif %} {% endcomment %}
+										{% endif %}
+
+										{% for product in goods %}
+
+										<li class="product col-md-3 col-sm-6">
+											<div class="product-container">
+												<figure>
+													<div class="product-wrap">
+														<div class="product-images">
+
+															{% if  product.images %}
+															<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
+																<img width="375" height="505" src="{{product.images.url}}" alt="{{product.name}}"/>
+															</div>
+															<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
+																<img width="375" height="505" src="{{product.images.url}}" alt="{{product.name}}"/>
+															</div>
+															{% else %}
+															
+																<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
+																	<img width="375" height="505" src="{% static "вставить ссылку на картинку когда нет фото" %}" alt="{{product.name}}"/>
+																</div>
+																<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
+																	<img width="375" height="505" src="{% static "вставить ссылку на картинку когда нет фото" %}" alt="{{product.name}}"/>
+																</div>
+															{% endif %}
+
+															<div class="loop-action">
+																<div class="shop-loop-quickview">
+																	<a title="Quick view" href="{% url "catalog:product" product.slug%}">
+																		Описание
+																	</a>
+																</div>
+																<div class="loop-add-to-cart">
+																	<a href="{% url "cart:cart_add" product.slug%}" class="add_to_cart_button">
+																		Добавить в корзину
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<figcaption>
+														<div class="shop-loop-product-info">
+															<div class="info-meta clearfix">
+																
+																 <div class="container">
+																	<p class="text-white bg-dark font-weight-light font-italic">{{product.display_id}}</p>
+																</div> 
+																{% comment %} <div class="loop-add-to-wishlist">
+																	<div class="yith-wcwl-add-to-wishlist">
+                                                                        <div class="yith-wcwl-add-button">
+                                                                            <a href="#" class="add_to_wishlist">
+                                                                                Add to Wishlist
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> {% endcomment %}
+															</div>   
+															<div class="info-content-wrap">
+																<h3 class="product_title">
+																	<a href="{% url "catalog:product" product.slug%}">{{product.name}}</a>
+																</h3>
+
+																{% if product.discount %}
+																<div class="info-price">
+																	<span class="price">
+																		<span class="amount">
+																			{{product.sell_price}} руб.
+																		</span>
+																		{% comment %} &ndash; {% endcomment %}
+																		{% comment %} <span class="amount">
+																			&pound;{{product.price}}
+																		</span> {% endcomment %}
+																	</span>
+																{%else%}
+																<div class="info-price">
+																	<span class="price">
+																		<span class="amount">
+																			{{product.price}} руб.
+																		</span>
+																		{% comment %} &ndash; {% endcomment %}
+																		{% comment %} <span class="amount">
+																			&pound;{{product.price}}
+																		</span> {% endcomment %}
+																	</span>
+																{% endif %}
+															
+															</div>
+														</div>
+													</figcaption>
+												</figure>
+											</div>
+										</li>
+										{% endfor %}
+
+										
+										
+										<div class="paginate">
+											<div class="paginate_links">
+
+												{% comment %} <span class='page-numbers current'>1</span> {% endcomment %}
+												<a class="prev page-numbers disabled" href="{% if goods.has_previous %}
+												?page={{goods.previous_page_number}}
+												{% else %}
+												#
+												{% endif %}">
+													<i class="fa fa-angle-left"></i>
+												</a>
+
+												{% for page in goods.paginator.page_range %}
+												<a class='page-numbers {% if goods.number == page %}active{% endif %}' href='?page={{page}}'>{{ page }}</a>
+											
+												{% endfor %}
+
+												<a class="next page-numbers" href="{% if goods.has_next %}?page={{goods.next_page_number}}
+												{% else %}
+												#
+												{% endif %}">
+													<i class="fa fa-angle-right"></i>
+												</a>
+												
+											</div>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+		{% endblock  %} 

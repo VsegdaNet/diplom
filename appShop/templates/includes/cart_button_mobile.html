@@ -1,0 +1,9 @@
+{% load static %}
+
+{% load carts_tags %}						
+							
+{%user_carts request as carts%}
+
+
+
+    <i class="elegant_icon_bag"></i><span>{{carts.total_quantity}}</span>

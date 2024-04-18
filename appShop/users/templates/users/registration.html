@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+		 	<div class="heading-container">
+				<div class="container heading-standar">
+					<div class="page-breadcrumb">
+						<ul class="breadcrumb">
+							{% comment %} <li>
+								<span>
+									<a class="home" href="#">
+										<span>Home</span>
+									</a>
+								</span>
+							</li>
+							<li>
+								<span>My Account</span>
+							</li> {% endcomment %}
+						</ul>
+					</div>
+				</div>
+			</div> 
+			<div class="content-container no-padding">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="main-content">
+								<div class="commerce commerce-account">
+									<h2 class="commerce-account-heading">Регистрация</h2>
+
+
+
+									<form class="login" action="{% url "user:registration" %}" method="post">
+										{% csrf_token %}
+									
+										
+
+									<div class="form-row form-row-wide">
+											<label for="id_first_name">
+												Введите имя <span class="required">*</span>
+											</label>
+											<input type="text" class="input-text" name="first_name" 
+											value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}" 
+											id="id_first_name" placeholder="Введите ваше имя" value=""/>
+											{% if form.first_name.errors %}
+											<p>{{form.first_name.errors}}</p>
+											{% endif %}
+									</div>
+
+									<div class="form-row form-row-wide">
+										<label for="id_last_name">
+											Введите фамилию <span class="required">*</span>
+										</label>
+										<input type="text" class="input-text" name="last_name" 
+										value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}" 
+										id="id_last_name" placeholder="Введите вашу фамилию" value=""/>
+										{% if form.last_name.errors %}
+											<p>{{form.last_name.errors}}</p>
+											{% endif %}
+									</div>	
+
+									<div class="form-row form-row-wide">
+											<label for="id_username">
+												Введите имя пользователя <span class="required">*</span>
+											</label>
+											<input type="text" class="input-text" name="username" 
+											value="{% if form.username.value %}{{form.username.value}}{% endif %}" 
+											id="id_username" placeholder="Введите имя пользователя" value=""/>
+											{% if form.username.errors %}
+											<p>{{form.username.errors}}</p>
+											{% endif %}
+									</div>
+
+									<div class="form-row form-row-wide">
+										<label for="id_email">Введите email<span class="required">*</span></label>
+										<input class="input-text" type="email" name="email" 
+										id="id_email" placeholder="Введите ваш email"/>
+										{% if form.email.errors %}
+											<div>{{form.email.errors}}</div>
+										{% endif %}
+									</div>
+
+									<div class="form-row form-row-wide">
+										<label for="id_password1">Введите пароль<span class="required">*</span></label>
+										<input class="input-text" type="password" name="password1" 
+										id="id_password1" placeholder="Введите пароль"/>
+										{% if form.password1.errors %}
+											<p>{{form.password1.errors}}</p>
+										{% endif %}
+									</div>
+
+									<div class="form-row form-row-wide">
+										<label for="id_password2">Подтвердите пароль<span class="required">*</span></label>
+										<input class="input-text" type="password" name="password2" 
+										id="id_password2" placeholder="Подтвердите пароль"/>
+										{% if form.password2.errors %}
+											<p>{{form.password2.errors}}</p>
+										{% endif %}
+									</div>
+
+
+										<div class="form-row">
+											 <label for="rememberme1" class="inline form-flat-checkbox">
+												<input name="rememberme" type="checkbox" id="rememberme1" value="forever"/><i></i>Remember me 
+											</label> 
+											<br><br>
+											<button class="btn btn-outline" type="submit">Зарегистрироватся</button>
+										</div>
+
+								
+
+										<div class="lost_password">
+											<a href="#">Забыл пароль?</a>
+										</div>
+										<div class="lost_password">
+											<a href="{% url "user:login" %}">Войти</a>
+										</div> 
+									</form>
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endblock  %}
+
+
+			{% comment %} <div class="d-flex align-items-center">
+				<div class="p-2">Flex item 1</div>
+				<div class="p-2">Flex item 2</div>
+				<div class="p-2">Flex item 3</div>
+			  </div>
+			  
+			  <!-- responsive variations -->
+			  <div class="d-flex align-items-sm-center">...</div>
+			  <div class="d-flex align-items-md-center">...</div>
+			  <div class="d-flex align-items-lg-center">...</div>
+			  <div class="d-flex align-items-xl-center">...</div> {% endcomment %}
+			  

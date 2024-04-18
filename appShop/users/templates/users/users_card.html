@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block content %}
+
+			<div class="heading-container">
+				<div class="container heading-standar">
+					<div class="page-breadcrumb">
+						<ul class="breadcrumb">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content-container">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="main-content">
+								<div class="commerce">
+									
+
+                                    {% include "carts/includes/included_carts.html" %}
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endblock  %} 

@@ -1,0 +1,12 @@
+{% load static %}
+
+{% load carts_tags %}						
+							
+{%user_carts request as carts%}
+
+
+
+    <span class="minicart-icon">
+        <i class="fa fa-shopping-cart"></i>
+            <span>{{carts.total_quantity}}</span>
+    </span>

@@ -1,0 +1,109 @@
+
+{% load static %}	
+{% load carts_tags %}						
+							
+{%user_carts request as carts%}
+
+
+
+			{% if carts %}
+			<form>
+				<table class="table shop_table cart">
+					<thead>
+						<tr>
+							<th class="product-remove hidden-xs">&nbsp;</th>
+							<th class="product-thumbnail hidden-xs">&nbsp;</th>
+							<th class="product-name">Product</th>
+							<th class="product-price text-center">Price</th>
+							<th class="product-quantity text-center">Quantity</th>
+							<th class="product-subtotal text-center hidden-xs">Total</th>
+						</tr>
+					</thead>
+				
+					{% for cart in carts %}
+					<tbody>
+						<tr class="cart_item">
+							<td class="product-remove hidden-xs">
+								<a href="{% url "cart:cart_remove" cart.id %}" class="remove" title="Remove this item">&times;</a>
+							</td>
+							<td class="product-thumbnail hidden-xs">
+								<a href="shop-detail-1.html">
+									<img width="100" height="150" src="{{cart.product.images.url}}" alt="Product-2"/>
+								</a>
+							</td>
+							
+							<td class="product-name">
+								<a href="shop-detail-1.html">{{cart.product.name}}</a>
+								<dl class="variation">
+									<dt class="variation-Color">Color:</dt>
+									<dd class="variation-Color"><p>Green</p></dd>
+									<dt class="variation-Size">Size:</dt>
+									<dd class="variation-Size"><p>Medium</p></dd>
+								</dl>
+							</td>
+							<td class="product-price text-center">
+								<span class="amount">&#36;{{cart.product.sell_price}}</span>
+							</td>
+							<td class="product-quantity text-center">
+								<div class="quantity">
+									<input type="number" step="1" min="0" name="quantity" value="{{cart.quantity}}" title="Qty" class="input-text qty text" size="4"/>
+								</div>
+							</td>
+							<td class="product-subtotal hidden-xs text-center">
+								<span class="amount">&#36;{{cart.products_price}}</span>
+							</td>
+						</tr>
+					</tbody>
+					{% endfor %}
+
+
+				</table>
+			</form>
+			<div class="cart-collaterals">
+				<div class="cart_totals">
+					<h2>Cart Totals</h2>
+					<table>
+						<tr class="cart-subtotal">
+							<th>Промежуточный итог</th>
+							<td><span class="amount">&#36;{{carts.total_price}}</span></td>
+						</tr>
+						<tr class="shipping">
+							<th>Доставка</th>
+							<td><span class="amount">&#36;0.00</span></td>
+						</tr>
+						<tr class="order-total">
+							<th>Сумма</th>
+							<td><strong><span class="amount">&#36;{{carts.total_price}}</span></strong></td>
+						</tr>
+					</table>
+					
+					<div class="wc-proceed-to-checkout">
+						<a href="{% url "orders:create_order" %}" class="checkout-button button alt wc-forward">ПЕРЕЙТИ К ОФОРМЛЕНИЮ ЗАКАЗА</a>
+					</div>
+				</div>
+					</ul>
+				</div>
+			</div>
+
+
+
+			{% else %}
+
+
+			<div class="content-container">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="main-content">
+								<div class="commerce">
+									<p class="cart-empty">Ваша корзина на данный момент пуста</p>
+									<p class="return-to-shop"><a class="button wc-backward" href="{% url "catalog:index" "all" %}">Вернуться в магазин</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			{% endif %}
